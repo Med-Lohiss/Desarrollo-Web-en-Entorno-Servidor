@@ -1,0 +1,3 @@
+Jose;123456;M;4;9
+Ada Lovelace;32000031R;F;1;0
+James Cosling;32000032G;M;4;7
