@@ -1,0 +1,162 @@
+@charset "ISO-8859-1";
+@charset "UTF-8";
+
+/* Estilos generales */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif; /* Fuente elegida */
+    background-color: #f0f8ff; /* Azul claro */
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+h1 {
+    color: #6a0dad; /* Morado */
+    text-align: center;
+    margin-top: 20px;
+    cursor: pointer; /* Cursor de puntero para indicar que es clickeable */
+}
+
+/* Añadir una clase de transición para el contenido del formulario */
+.form-box {
+    width: 90%; /* Cambiado a 90% para mejor ajuste */
+    max-width: 600px; /* Ancho máximo */
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #e0f2ff; /* Azul más oscuro que el fondo */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Ocultar contenido del formulario por defecto */
+.form-content {
+    display: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out; /* Animación suave */
+}
+
+/* Cuando el contenido se despliega */
+.form-box.active .form-content {
+    display: block;
+    max-height: 500px; /* Puedes ajustar esto según el tamaño de tu formulario */
+    transition: max-height 0.5s ease-in; /* Transición inversa */
+}
+
+table {
+    width: 100%; /* Cambiado a 100% para ser más responsivo */
+    max-width: 900px; /* Ancho máximo */
+    margin: 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #4b0082; /* Azul oscuro */
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Estilo para los enlaces en el encabezado */
+th a {
+    color: white; /* Color de los enlaces */
+    text-decoration: none; /* Sin subrayado */
+    margin: 0 5px; /* Espaciado entre enlaces y texto */
+    font-weight: bold; /* Peso de fuente */
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+td a {
+    color: #6a0dad; /* Morado */
+    text-decoration: none;
+}
+
+td a:hover {
+    text-decoration: underline;
+}
+
+input[type="text"] {
+    width: 95%;
+    padding: 10px; /* Aumentado para mejor usabilidad */
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="submit"] {
+    background-color: #6a0dad; /* Morado */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 20px 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input[type="submit"]:hover {
+    background-color: #7e1f85; /* Morado oscuro */
+}
+
+div {
+    width: 90%; /* Cambiado a 90% para mejor ajuste */
+    max-width: 600px; /* Ancho máximo */
+    margin: 20px auto;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* Estilos para mensajes de error y éxito */
+div[style*="color: red"] {
+    background-color: #ffe6e6; /* Fondo rojo suave */
+}
+
+div[style*="color: green"] {
+    background-color: #e6ffe6; /* Fondo verde suave */
+}
+
+/* Enlaces del menú */
+table a {
+    display: block;
+    padding: 10px;
+    background-color: #4b0082; /* Azul oscuro */
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+table a:hover {
+    background-color: #3a0066; /* Azul más oscuro */
+}
+
+/* Media queries para responsividad */
+@media (max-width: 600px) {
+    table, th, td {
+        font-size: 14px; /* Tamaño de fuente más pequeño en pantallas pequeñas */
+    }
+    
+    input[type="text"],
+    input[type="submit"] {
+        width: 100%; /* Botones y campos de texto ocupan el 100% */
+    }
+    
+    div {
+        width: 95%; /* Divs ocupan el 95% */
+    }
+}
+
