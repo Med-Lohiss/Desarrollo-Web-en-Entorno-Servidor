@@ -27,25 +27,20 @@ public class ProductoDAO {
   * @return true si el producto existe, false si no.
   * @throws SQLException si ocurre un error de SQL.
   */
-public boolean existeProducto(int id, String nombre) throws SQLException {
-	
-  String sql = "SELECT COUNT(*) FROM productos WHERE id = ? OR nombre = ?";
-  try (Connection conn = obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-	  
-      stmt.setInt(1, id);
-      stmt.setString(2, nombre);
-      ResultSet rs = stmt.executeQuery();
-      
-      if (rs.next()) {
-    	  
-          return rs.getInt(1) > 0; // Devuelve true si el producto existe
-          
-      }
-  }
-  
-  return false; // Si no existe, devuelve false
-  
-}
+ public boolean existeProducto(int id, String nombre) throws SQLException {
+	    String sql = "SELECT COUNT(*) FROM productos WHERE nombre = ? AND id != ?";
+	    try (Connection conn = obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+	        stmt.setString(1, nombre);
+	        stmt.setInt(2, id); // Comprobamos que el ID sea diferente
+	        ResultSet rs = stmt.executeQuery();
+	        
+	        if (rs.next()) {
+	            return rs.getInt(1) > 0; // Devuelve true si el producto existe
+	        }
+	    }
+	    
+	    return false; // Si no existe, devuelve false
+	}
 
  
 /**

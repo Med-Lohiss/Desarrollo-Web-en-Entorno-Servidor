@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
@@ -37,15 +36,15 @@
 				<table border="1">
 					<tr>
 						<td>Nombre:</td>
-						<td><input type="text" name="nombre" size="50"></td>
+						<td><input type="text" name="nombre" size="50" value="${nombre != null ? nombre : ''}"></td>
 					</tr>
 					<tr>
 						<td>Cantidad:</td>
-						<td><input type="text" name="cantidad" size="50"></td>
+						<td><input type="text" name="cantidad" size="50" value="${cantidad != null ? cantidad : ''}"></td>
 					</tr>
 					<tr>
 						<td>Precio:</td>
-						<td><input type="text" name="precio" size="50"></td>
+						<td><input type="text" name="precio" size="50" value="${precio != null ? precio : ''}"></td>
 					</tr>
 				</table>
 				<input type="submit" value="Guardar">

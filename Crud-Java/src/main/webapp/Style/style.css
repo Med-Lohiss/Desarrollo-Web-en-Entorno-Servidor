@@ -22,7 +22,7 @@ h1 {
     width: 90%; /* Cambiado a 90% para mejor ajuste */
     max-width: 600px; /* Ancho máximo */
     margin: 20px auto;
-    padding: 20px;
+    padding: 10px;
     background-color: #e0f2ff; /* Azul más oscuro que el fondo */
     border: 1px solid #ccc;
     border-radius: 8px;
