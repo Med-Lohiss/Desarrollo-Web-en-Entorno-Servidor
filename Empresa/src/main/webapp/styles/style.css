@@ -286,6 +286,41 @@ div[style*="color: green"] {
     text-align:center;
 }
 
+/* Estilo del pop-up */
+.popup {
+    position: fixed; /* Posición fija */
+    z-index: 1; /* Aparece por encima de otros elementos */
+    left: 50%; /* Centrado horizontalmente */
+    top: 20%; /* Distancia desde la parte superior */
+    transform: translateX(-50%); /* Ajuste de centrado */
+    background-color: #e0f2ff; /* Color de fondo */
+    border: 1px solid #888; /* Borde */
+    padding: 15px; /* Espaciado interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+    display: none; /* Oculto por defecto */
+    animation: fadeIn 0.5s, fadeOut 0.5s 5.5s; /* Animaciones */
+    border-radius: 8px;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Animación de salida */
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* Estilo del texto del pop-up */
+#popupMessage {
+    color: green; /* Color verde */
+    font-size: 120%; /* Tamaño de letra un 20% mayor */
+}
+
+
 /* Media queries para responsividad */
 @media (max-width: 600px) {
     h1, h2 {

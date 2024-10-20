@@ -42,7 +42,8 @@ public class EmpleadoController extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        request.setCharacterEncoding("UTF-8");
+        
         String opcion = request.getParameter("opcion");
 
         if ("crear".equals(opcion)) {
@@ -170,7 +171,8 @@ public class EmpleadoController extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
+        request.setCharacterEncoding("UTF-8");
         String opcion = request.getParameter("opcion");
 
         if ("guardar".equals(opcion)) {
@@ -182,6 +184,19 @@ public class EmpleadoController extends HttpServlet {
             String sexoStr = request.getParameter("sexo");
             String categoriaStr = request.getParameter("categoria");
             String anyosStr = request.getParameter("anyos");
+            
+            if (!empleadoDAO.validateDNI(dni)) { // Llamada al método de validación del DNI
+                request.setAttribute("mensajeError", "El DNI no es válido.");
+                // Establecer otros atributos para mantener la información en el formulario
+                request.setAttribute("dni", dni);
+                request.setAttribute("nombre", nombre);
+                request.setAttribute("sexo", sexoStr);
+                request.setAttribute("categoria", categoriaStr);
+                request.setAttribute("anyos", anyosStr);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/crear.jsp");
+                requestDispatcher.forward(request, response);
+                return;
+            }
 
             // Validaciones previas
             if (dni == null || dni.trim().isEmpty() || nombre == null || nombre.trim().isEmpty() || sexoStr == null
@@ -201,29 +216,30 @@ public class EmpleadoController extends HttpServlet {
 
             // Validar si el empleado ya existe
             try {
-				if (empleadoDAO.existeEmpleado(dni)) {
-				    request.setAttribute("mensajeError", "El empleado ya existe.");
-				    request.setAttribute("dni", dni);
-				    request.setAttribute("nombre", nombre);
-				    request.setAttribute("sexo", sexoStr);
-				    request.setAttribute("categoria", categoriaStr);
-				    request.setAttribute("anyos", anyosStr);
-				    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/crear.jsp");
-				    requestDispatcher.forward(request, response);
-				    return;
-				}
-			} catch (SQLException | ServletException | IOException e) {
-				e.printStackTrace();
-			}
+                if (empleadoDAO.existeEmpleado(dni)) {
+                    request.setAttribute("mensajeError", "El empleado ya existe.");
+                    request.setAttribute("dni", dni);
+                    request.setAttribute("nombre", nombre);
+                    request.setAttribute("sexo", sexoStr);
+                    request.setAttribute("categoria", categoriaStr);
+                    request.setAttribute("anyos", anyosStr);
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/crear.jsp");
+                    requestDispatcher.forward(request, response);
+                    return;
+                }
+            } catch (SQLException | ServletException | IOException e) {
+                e.printStackTrace();
+            }
 
             // Validar y establecer sexo
             char sexo;
-            if (sexoStr.length() == 1 && (sexoStr.equals("M") || sexoStr.equals("F")) ) {
+            if (sexoStr.length() == 1 && (sexoStr.charAt(0) == 'M' || sexoStr.charAt(0) == 'F')) {
                 sexo = sexoStr.charAt(0);
             } else {
-                request.setAttribute("mensajeError", "El sexo solo puede ser 'M' o 'F' (Mayúscula).");
+                request.setAttribute("mensajeError", "El sexo debe ser 'M' o 'F'.");
                 request.setAttribute("dni", dni);
                 request.setAttribute("nombre", nombre);
+                request.setAttribute("sexo", sexoStr);
                 request.setAttribute("categoria", categoriaStr);
                 request.setAttribute("anyos", anyosStr);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/crear.jsp");
@@ -235,11 +251,15 @@ public class EmpleadoController extends HttpServlet {
             int categoria;
             try {
                 categoria = Integer.parseInt(categoriaStr);
+                if (categoria < 1 || categoria > 10) {
+                    throw new NumberFormatException("La categoría debe estar entre 1 y 10.");
+                }
             } catch (NumberFormatException e) {
-                request.setAttribute("mensajeError", "La categoría debe ser un número entero.");
+                request.setAttribute("mensajeError", "La categoría debe ser un número entre 1 y 10.");
                 request.setAttribute("dni", dni);
                 request.setAttribute("nombre", nombre);
                 request.setAttribute("sexo", sexoStr);
+                request.setAttribute("categoria", categoriaStr);
                 request.setAttribute("anyos", anyosStr);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/crear.jsp");
                 requestDispatcher.forward(request, response);
@@ -250,17 +270,22 @@ public class EmpleadoController extends HttpServlet {
             int anyos;
             try {
                 anyos = Integer.parseInt(anyosStr);
+                if (anyos < 0) {
+                    throw new NumberFormatException("Los años no pueden ser negativos.");
+                }
             } catch (NumberFormatException e) {
-                request.setAttribute("mensajeError", "Los años deben ser un número entero.");
+                request.setAttribute("mensajeError", "Los años de experiencia deben ser un número no negativo.");
                 request.setAttribute("dni", dni);
                 request.setAttribute("nombre", nombre);
                 request.setAttribute("sexo", sexoStr);
                 request.setAttribute("categoria", categoriaStr);
+                request.setAttribute("anyos", anyosStr);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/crear.jsp");
                 requestDispatcher.forward(request, response);
                 return;
             }
 
+            // Establecer datos en el empleado
             empleado.setDni(dni);
             empleado.setNombre(nombre);
             empleado.setSexo(sexo);
@@ -270,13 +295,15 @@ public class EmpleadoController extends HttpServlet {
 				e.printStackTrace();
 			}
             empleado.setAnyos(anyos);
+
+            // Guardar el empleado en la base de datos
             try {
                 empleadoDAO.guardar(empleado);
-                request.getSession().setAttribute("mensajeExito", "Empleado/a dado/a de alta satisfactoriamente");
+                request.getSession().setAttribute("mensajeExito", "Empleado dado de alta satisfactoriamente.");
                 response.sendRedirect(request.getContextPath() + "/empleados?opcion=listar");
-            } catch (SQLException e) {
+            } catch (SQLException | DatosNoCorrectosException e) {
                 e.printStackTrace();
-                request.setAttribute("mensajeError", "Error al crear el empleado: " + e.getMessage());
+                request.setAttribute("mensajeError", "Error al guardar el empleado: " + e.getMessage());
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/crear.jsp");
                 requestDispatcher.forward(request, response);
             }
@@ -292,7 +319,7 @@ public class EmpleadoController extends HttpServlet {
             String anyosStr = request.getParameter("anyos");
 
             // Validaciones previas
-            if (dni == null || dni.trim().isEmpty() || nombre == null || nombre.trim().isEmpty() || sexoStr == null
+            if (nombre == null || nombre.trim().isEmpty() || sexoStr == null
                     || sexoStr.trim().isEmpty() || categoriaStr == null || categoriaStr.trim().isEmpty()
                     || anyosStr == null || anyosStr.trim().isEmpty()) {
 
@@ -309,12 +336,13 @@ public class EmpleadoController extends HttpServlet {
 
             // Validar y establecer sexo
             char sexo;
-            if (sexoStr.length() == 1) {
+            if (sexoStr.length() == 1 && (sexoStr.charAt(0) == 'M' || sexoStr.charAt(0) == 'F')) {
                 sexo = sexoStr.charAt(0);
             } else {
-                request.setAttribute("mensajeError", "El sexo debe ser un solo carácter (M/F).");
+                request.setAttribute("mensajeError", "El sexo debe ser 'M' o 'F'.");
                 request.setAttribute("dni", dni);
                 request.setAttribute("nombre", nombre);
+                request.setAttribute("sexo", sexoStr);
                 request.setAttribute("categoria", categoriaStr);
                 request.setAttribute("anyos", anyosStr);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/editar.jsp");
@@ -326,11 +354,15 @@ public class EmpleadoController extends HttpServlet {
             int categoria;
             try {
                 categoria = Integer.parseInt(categoriaStr);
+                if (categoria < 1 || categoria > 10) {
+                    throw new NumberFormatException("La categoría debe estar entre 1 y 10.");
+                }
             } catch (NumberFormatException e) {
-                request.setAttribute("mensajeError", "La categoría debe ser un número entero.");
+                request.setAttribute("mensajeError", "La categoría debe ser un número entre 1 y 10.");
                 request.setAttribute("dni", dni);
                 request.setAttribute("nombre", nombre);
                 request.setAttribute("sexo", sexoStr);
+                request.setAttribute("categoria", categoriaStr);
                 request.setAttribute("anyos", anyosStr);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/editar.jsp");
                 requestDispatcher.forward(request, response);
@@ -341,17 +373,22 @@ public class EmpleadoController extends HttpServlet {
             int anyos;
             try {
                 anyos = Integer.parseInt(anyosStr);
+                if (anyos < 0) {
+                    throw new NumberFormatException("Los años no pueden ser negativos.");
+                }
             } catch (NumberFormatException e) {
-                request.setAttribute("mensajeError", "Los años deben ser un número entero.");
+                request.setAttribute("mensajeError", "Los años de experiencia deben ser un número no negativo.");
                 request.setAttribute("dni", dni);
                 request.setAttribute("nombre", nombre);
                 request.setAttribute("sexo", sexoStr);
                 request.setAttribute("categoria", categoriaStr);
+                request.setAttribute("anyos", anyosStr);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/editar.jsp");
                 requestDispatcher.forward(request, response);
                 return;
             }
 
+            // Establecer datos en el empleado
             empleado.setDni(dni);
             empleado.setNombre(nombre);
             empleado.setSexo(sexo);
@@ -363,8 +400,10 @@ public class EmpleadoController extends HttpServlet {
 			}
             empleado.setAnyos(anyos);
 
+            // Editar el empleado en la base de datos
             try {
                 empleadoDAO.editar(empleado);
+                request.getSession().setAttribute("mensajeExito", "Empleado editado satisfactoriamente.");
                 response.sendRedirect(request.getContextPath() + "/empleados?opcion=listar");
             } catch (SQLException e) {
                 e.printStackTrace();

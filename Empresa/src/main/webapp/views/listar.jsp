@@ -5,11 +5,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Listar y Crear Empleados</title>
 <link rel="stylesheet" type="text/css" href="styles/style.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 <script>
 	// Función para alternar la clase .active en la caja del formulario
 	function toggleForm() {
@@ -28,6 +29,18 @@
 	function goBack() {
 		window.history.back();
 	}
+
+	// Función para mostrar el pop-up
+	function showPopup(message) {
+	    document.getElementById('popupMessage').innerText = message;
+	    var popup = document.getElementById('successPopup');
+	    popup.style.display = "block";
+
+	    // Ocultar el pop-up después de 6 segundos
+	    setTimeout(function() {
+	        popup.style.display = "none";
+	    }, 6000); // 6000 ms = 6 segundos
+	}
 </script>
 </head>
 <body>
@@ -39,15 +52,18 @@
 
 		<nav>
 			<!-- Enlaces de navegación -->
-			<a href="index.jsp" title="Inicio"><i class="fas fa-home"></i></a> <a
-				href="empleados?opcion=crear" title="Crear Empleado"><i
-				class="fas fa-user-plus"></i></a> <a href="empleados?opcion=listar"
-				title="Listar Empleados"><i class="fas fa-list"></i></a> <a
-				href="empleados?opcion=salario" title="Buscar Salario de Empleado"><i
-				class="fas fa-search-dollar"></i></a> <a href="empleados?opcion=buscar"
-				title="Buscar Empleado"><i class="fas fa-search"></i></a>
+			<a href="index.jsp" title="Inicio"><i class="fas fa-home"></i></a> 
+			<a href="empleados?opcion=crear" title="Crear Empleado"><i class="fas fa-user-plus"></i></a> 
+			<a href="empleados?opcion=listar" title="Listar Empleados"><i class="fas fa-list"></i></a> 
+			<a href="empleados?opcion=salario" title="Buscar Salario de Empleado"><i class="fas fa-search-dollar"></i></a> 
+			<a href="empleados?opcion=buscar" title="Buscar Empleado"><i class="fas fa-search"></i></a>
 		</nav>
 	</header>
+
+	<!-- Pop-Up de éxito -->
+	<div id="successPopup" class="popup">
+	    <p id="popupMessage"></p>
+	</div>
 
 	<!-- Formulario de creación de empleado (desplegable) -->
 	<div class="form-box">
@@ -56,48 +72,47 @@
 			<c:if test="${not empty mensajeError}">
 				<div style="color: red;">${mensajeError}</div>
 			</c:if>
-			<c:if test="${not empty sessionScope.mensajeExito}">
-				<div style="color: green;">${sessionScope.mensajeExito}</div>
-				<c:remove var="mensajeExito" scope="session" />
-			</c:if>
+			
 			<form action="empleados" method="post">
 				<input type="hidden" name="opcion" value="guardar">
 				<table border="1">
 					<tr>
 						<td>DNI:</td>
-						<td><input type="text" name="dni" size="50"
-							value="${dni != null ? dni : ''}"></td>
+						<td><input type="text" name="dni" size="50" value="${dni != null ? dni : ''}"></td>
 					</tr>
 					<tr>
 						<td>Nombre:</td>
-						<td><input type="text" name="nombre" size="50"
-							value="${nombre != null ? nombre : ''}"></td>
+						<td><input type="text" name="nombre" size="50" value="${nombre != null ? nombre : ''}"></td>
 					</tr>
 					<tr>
 						<td>Sexo:</td>
-						<td><input type="text" name="sexo" size="50"
-							value="${sexo != null ? sexo : ''}"></td>
+						<td><input type="text" name="sexo" size="50" value="${sexo != null ? sexo : ''}"></td>
 					</tr>
 					<tr>
 						<td>Categoria:</td>
-						<td><input type="text" name="categoria" size="50"
-							value="${categoria != null ? categoria : ''}"></td>
+						<td><input type="text" name="categoria" size="50" value="${categoria != null ? categoria : ''}"></td>
 					</tr>
 					<tr>
 						<td>Años Trabajados:</td>
-						<td><input type="text" name="anyos" size="50"
-							value="${anyos != null ? anyos : ''}"></td>
+						<td><input type="text" name="anyos" size="50" value="${anyos != null ? anyos : ''}"></td>
 					</tr>
 				</table>
 				<div>
-				<input type="submit" value="Guardar"> 
-				<input type="reset" value="Borrar">
+					<input type="submit" value="Guardar"> 
+					<input type="reset" value="Borrar">
 				</div>
 			</form>
 		</div>
 	</div>
 
 	<h1>Listado de Empleados</h1>
+	
+	<c:if test="${not empty sessionScope.mensajeExito}">
+		<script>
+			showPopup("${sessionScope.mensajeExito}");
+		</script>
+		<c:remove var="mensajeExito" scope="session" />
+	</c:if>
 
 	<!-- Tabla de empleados -->
 	<table>
@@ -108,29 +123,22 @@
 				Nombre <a href="empleados?opcion=listar&orden=nombre&direccion=desc">▼</a></th>
 			<th><a href="empleados?opcion=listar&orden=sexo&direccion=asc">▲</a>
 				Sexo <a href="empleados?opcion=listar&orden=sexo&direccion=desc">▼</a></th>
-			<th><a
-				href="empleados?opcion=listar&orden=categoria&direccion=asc">▲</a>
-				Categoria <a
-				href="empleados?opcion=listar&orden=categoria&direccion=desc">▼</a></th>
+			<th><a href="empleados?opcion=listar&orden=categoria&direccion=asc">▲</a>
+				Categoria <a href="empleados?opcion=listar&orden=categoria&direccion=desc">▼</a></th>
 			<th><a href="empleados?opcion=listar&orden=anyos&direccion=asc">▲</a>
-				Años Trabajados <a
-				href="empleados?opcion=listar&orden=anyos&direccion=desc">▼</a></th>
+				Años Trabajados <a href="empleados?opcion=listar&orden=anyos&direccion=desc">▼</a></th>
 			<th></th>
 			<th></th>
 		</tr>
 		<c:forEach var="empleado" items="${lista}">
 			<tr>
-				<td><a href="empleados?opcion=meditar&dni=${empleado.dni}"><c:out
-							value="${empleado.dni}" /></a></td>
+				<td><a href="empleados?opcion=meditar&dni=${empleado.dni}"><c:out value="${empleado.dni}" /></a></td>
 				<td><c:out value="${empleado.nombre}" /></td>
 				<td><c:out value="${empleado.sexo}" /></td>
 				<td><c:out value="${empleado.categoria}" /></td>
 				<td><c:out value="${empleado.anyos}" /></td>
-				<td><a href="empleados?opcion=eliminar&dni=${empleado.dni}"
-					onclick="return confirmarEliminacion('${empleado.dni}')"
-					title="Eliminar"><i class="fas fa-trash"></i></a></td>
-				<td><a href="empleados?opcion=meditar&dni=${empleado.dni}"
-					title="Actualizar"><i class="fas fa-edit"></i></a></td>
+				<td><a href="empleados?opcion=eliminar&dni=${empleado.dni}" onclick="return confirmarEliminacion('${empleado.dni}')" title="Eliminar"><i class="fas fa-trash"></i></a></td>
+				<td><a href="empleados?opcion=meditar&dni=${empleado.dni}" title="Actualizar"><i class="fas fa-edit"></i></a></td>
 			</tr>
 		</c:forEach>
 	</table>

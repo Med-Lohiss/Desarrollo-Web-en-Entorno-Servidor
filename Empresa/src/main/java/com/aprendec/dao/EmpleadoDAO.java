@@ -15,9 +15,32 @@ import com.aprendec.model.*;
  */
 public class EmpleadoDAO {
 	
+ private static final String LETTERS = "TRWAGMYFPDXBNJZSQVHLCKE"; 
  private Connection connection;
  private PreparedStatement statement;
  private boolean estadoOperacion;
+ 
+ 
+ public boolean validateDNI(String dni) {
+     // Verificar que el string tenga 8 o 9 caracteres
+     if (dni.length() < 8 || dni.length() > 9) {
+         return false;
+     }
+
+     // Extraer los 8 primeros caracteres como número
+     int number;
+     try {
+         number = Integer.parseInt(dni.substring(0, 8));
+     } catch (NumberFormatException e) {
+         return false; // En caso de que no sea un número válido
+     }
+
+     // Calcular la letra final
+     char letter = LETTERS.charAt(number % LETTERS.length());
+
+     // Verificar que la letra final coincide con el string
+     return dni.charAt(8) == letter;
+ }
  
  /**
   * Verifica si un empleado existe en la base de datos.
@@ -47,8 +70,14 @@ public class EmpleadoDAO {
  * @param empleado el empleado a guardar.
  * @return true si la operación fue exitosa, false en caso contrario.
  * @throws SQLException si ocurre un error de SQL.
+ * @throws DatosNoCorrectosException 
  */
- public boolean guardar(Empleado empleado) throws SQLException {
+ public boolean guardar(Empleado empleado) throws SQLException, DatosNoCorrectosException {
+	 
+	 if (!validateDNI(empleado.getDni())) {
+         throw new DatosNoCorrectosException("DNI no válido.");
+     }
+	 
 	    String sqlEmpleado = null;
 	    String sqlNomina = null;
 	    estadoOperacion = false;
