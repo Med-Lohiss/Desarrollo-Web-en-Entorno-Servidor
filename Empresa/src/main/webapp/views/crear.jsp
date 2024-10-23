@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Crear Empleado</title>
 <link rel="stylesheet" type="text/css" href="styles/style.css">
 <link rel="stylesheet"
@@ -73,16 +73,16 @@
 					value="${anyos != null ? anyos : ''}"></td>
 			</tr>
 		</table>
-		<input type="submit" value="Guardar"> <input type="reset"
-			value="Borrar">
-		<button onclick="goBack()" class="btn-volver">
-			<i class="fas fa-arrow-left"></i> Volver
-		</button>
-		<script>
-			function goBack() {
-				window.history.back();
-			}
-		</script>
+		<input type="submit" value="Guardar" class="submit"> <input
+			type="reset" value="Borrar" class="reset">
 	</form>
+	<button onclick="goBack()" class="btn-volver">
+		<i class="fas fa-arrow-left"></i> Volver
+	</button>
+	<script>
+		function goBack() {
+			window.history.back();
+		}
+	</script>
 </body>
 </html>

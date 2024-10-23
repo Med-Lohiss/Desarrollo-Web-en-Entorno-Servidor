@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Editar Empleado</title>
 <link rel="stylesheet" type="text/css" href="styles/style.css">
 <link rel="stylesheet"
@@ -18,7 +18,7 @@
 		</div>
 
 		<nav>
-			<!-- Enlace al index.jsp con ícono de "home" -->
+			<!-- Enlace al index.jsp con Ã­cono de "home" -->
 			<a href="index.jsp" title="Inicio"> <i class="fas fa-home"></i>
 			</a> <a href="empleados?opcion=crear" title="Crear Empleado"> <i
 				class="fas fa-user-plus"></i>
@@ -39,7 +39,7 @@
 		<div style="color: red;">${mensajeError}</div>
 	</c:if>
 
-	<!-- Mostrar mensajes de éxito si los hay -->
+	<!-- Mostrar mensajes de Ã©xito si los hay -->
 	<c:if test="${not empty mensajeExito}">
 		<div style="color: green;">${mensajeExito}</div>
 	</c:if>
@@ -65,7 +65,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Categoría:</td>
+				<td>CategorÃ­a:</td>
 				<td>
 					<!-- Mantener el valor del campo 'categoria' --> <input type="text"
 					name="categoria" size="50"
@@ -73,7 +73,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Años trabajados:</td>
+				<td>AÃ±os trabajados:</td>
 				<td>
 					<!-- Mantener el valor del campo 'anyos' --> <input type="text"
 					name="anyos" size="50"
@@ -83,14 +83,14 @@
 		</table>
 
 		<input type="submit" value="Guardar">
-		<button onclick="goBack()" class="btn-volver">
-			<i class="fas fa-arrow-left"></i> Volver
-		</button>
-		<script>
-			function goBack() {
-				window.history.back();
-			}
-		</script>
 	</form>
+	<button onclick="goBack()" class="btn-volver">
+		<i class="fas fa-arrow-left"></i> Volver
+	</button>
+	<script>
+		function goBack() {
+			window.history.back();
+		}
+	</script>
 </body>
 </html>

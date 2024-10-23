@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta charset="UTF-8">
 <title>Menú de Opciones</title>
 <link rel="stylesheet" type="text/css" href="styles/style.css">
 <!-- Incluir Font Awesome para los íconos -->
