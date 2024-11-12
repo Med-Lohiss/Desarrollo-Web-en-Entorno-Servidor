@@ -1,0 +1,357 @@
+@charset "UTF-8";
+
+/* Estilos generales */
+body {
+	font-family: 'Helvetica Neue', Arial, sans-serif; /* Fuente elegida */
+	background-image: url('../images/vector.jpg'); /* Imagen de fondo */
+	background-size: cover; /* Cubrir toda la pantalla */
+	background-position: center; /* Centrar la imagen de fondo */
+	background-repeat: no-repeat; /* No repetir imagen de fondo */
+	margin: 0;
+	padding: 0;
+	color: #333;
+}
+
+/* Estilos para el header */
+header {
+	display: flex; /* Usar flexbox para alinear elementos */
+	justify-content: space-between; /* Espacio entre logo y enlaces */
+	align-items: center; /* Centrar verticalmente */
+	padding: 10px; /* Padding del header */
+	background-color: #e0f2ff;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilos para el logo */
+.logo img {
+	height: 60px; /* Altura del logo */
+}
+
+/* Estilos para los enlaces en el header */
+nav {
+	display: flex; /* Alinear enlaces horizontalmente */
+}
+
+nav a {
+	margin-left: 20px; /* Espaciado entre enlaces */
+	text-decoration: none; /* Sin subrayado */
+	color: #000; /* Color del texto */
+	font-weight: bold; /* Negrita */
+	transition: color 0.3s; /* Transición suave en el color */
+	padding: 10px;
+}
+
+nav a:hover {
+	color: #007bff; /* Color azul al pasar el mouse */
+}
+
+nav a i {
+	font-size: 24px; /* Tamaño de los íconos */
+}
+
+/* Opcional: si quieres que el primer ícono de "home" no tenga margen a la izquierda */
+nav a:first-child {
+	margin-left: 0; /* Sin margen para el primer enlace */
+}
+
+/* Estilos para los encabezados */
+h1 {
+	color: #007bff;
+	text-align: center;
+	margin-top: 20px;
+	cursor: pointer; /* Cursor de puntero para indicar que es clickeable */
+}
+
+h2 {
+	color: #007bff; /* Azul */
+	text-align: center;
+	margin: 15px 0; /* Espaciado */
+}
+
+/* Estilos para el contenido del formulario */
+.form-box, .form-buscar {
+	width: 90%; /* Cambiado a 90% para mejor ajuste */
+	max-width: 700px; /* Ancho máximo */
+	margin: 20px auto; /* Centrando el formulario */
+	padding: 5px;
+	background-color: #e0f2ff; /* Azul más oscuro que el fondo */
+	border: 1px solid #ccc; /* Borde gris */
+	border-radius: 8px; /* Bordes redondeados */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+/* Ocultar contenido del formulario por defecto */
+.form-content {
+	display: none; /* Ocultar por defecto */
+	max-height: 0; /* Altura máxima */
+	overflow: hidden; /* Esconder contenido excedente */
+	transition: max-height 0.5s ease-out; /* Transición suave */
+}
+
+/* Cuando el contenido se despliega */
+.form-box.active .form-content, .form-buscar.active .form-content {
+	display: block; /* Mostrar contenido */
+	max-height: 500px; /* Altura máxima */
+	transition: max-height 0.5s ease-in; /* Transición inversa */
+}
+
+/* Estilos para las tablas */
+table {
+	width: 70%; /* Ancho de la tabla reducido al 70% */
+	max-width: 900px; /* Ancho máximo */
+	margin: 20px auto; /* Centrando la tabla */
+	border-collapse: collapse; /* Colapsar bordes */
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+	border-radius: 8px; /* Bordes redondeados */
+	overflow: hidden; /* Esconder bordes redondeados */
+}
+
+table, th, td {
+	border: 1px solid #ddd; /* Bordes de la tabla */
+}
+
+th {
+	background-color: #007bff; /* Azul claro */
+	color: white; /* Texto blanco */
+	padding: 10px; /* Espaciado */
+	text-align: center; /* Centrado */
+}
+
+td {
+	padding: 10px; /* Espaciado en celdas */
+	text-align: center; /* Centrado */
+	background-color: #f9f9f9; /* Fondo de las celdas */
+	transition: background-color 0.3s; /* Transición suave en el hover */
+}
+
+/* Estilo en hover para las filas de la tabla */
+tr:hover {
+	background-color: rgba(173, 216, 230, 0.5);
+	/* Color de fondo en hover */
+}
+
+/* Estilo para los enlaces en el encabezado */
+th a {
+	color: white; /* Color de los enlaces */
+	text-decoration: none; /* Sin subrayado */
+	margin: 0 5px; /* Espaciado entre enlaces y texto */
+	font-weight: bold; /* Peso de fuente */
+}
+
+td a {
+	color: #007bff; /* Morado */
+	text-decoration: none; /* Sin subrayado */
+}
+
+td a:hover {
+	text-decoration: underline; /* Subrayar al pasar el mouse */
+}
+
+/* Estilos para botones */
+input[type="submit"] {
+	background-color: #007bff;
+	color: white; /* Texto blanco */
+	border: none; /* Sin borde */
+	padding: 10px 20px; /* Espaciado interno */
+	cursor: pointer; /* Cursor de puntero */
+	border-radius: 5px; /* Bordes redondeados */
+	margin: 20px 10px 20px 240px;
+	/* Margen superior e inferior, margen a la derecha */
+	transition: background-color 0.3s ease, transform 0.2s;
+	/* Transiciones suaves */
+	display: inline-block; /* Mostrar los botones en línea */
+}
+
+input[type="reset"] {
+	background-color: #007bff;
+	color: white; /* Texto blanco */
+	border: none; /* Sin borde */
+	padding: 10px 20px; /* Espaciado interno */
+	cursor: pointer; /* Cursor de puntero */
+	border-radius: 5px; /* Bordes redondeados */
+	margin: 20px 10px 20px 20px;
+	/* Margen superior e inferior, margen a la derecha */
+	transition: background-color 0.3s ease, transform 0.2s;
+	/* Transiciones suaves */
+	display: inline-block; /* Mostrar los botones en línea */
+}
+
+.btn-volver {
+	background-color: #007bff;
+	color: white; /* Texto blanco */
+	border: none; /* Sin borde */
+	padding: 10px 20px; /* Espaciado interno */
+	cursor: pointer; /* Cursor de puntero */
+	border-radius: 5px; /* Bordes redondeados */
+	margin: 20px 10px 20px 50px;
+	/* Margen superior e inferior, margen a la derecha */
+	transition: background-color 0.3s ease, transform 0.2s;
+	/* Transiciones suaves */
+	display: inline-block; /* Mostrar los botones en línea */
+}
+
+/* Estilo en hover para los botones */
+input[type="submit"]:hover, input[type="reset"]:hover, .btn-volver:hover
+	{
+	background-color: #7e1f85; /* Morado oscuro */
+	transform: scale(1.05); /* Efecto de agrandamiento */
+}
+
+/* Estilos generales para el contenedor de búsqueda */
+.busqueda {
+	width: 90%;
+	max-width: 700px;
+	margin: 20px auto;
+	padding: 20px;
+	background-color: #e0f2ff;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el formulario dentro del contenedor */
+.busqueda form {
+	margin-bottom: 20px; /* Separar el formulario de los resultados */
+}
+
+/* Separar claramente el formulario de los resultados */
+.busqueda hr {
+	margin: 20px 0; /* Espacio antes y después del separador */
+	border: none;
+	border-top: 1px solid #ccc;
+}
+
+/* Estilos para la tabla en el formulario */
+.busqueda table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+
+.busqueda td {
+	padding: 10px;
+	border: 1px solid #ddd;
+}
+
+.busqueda input[type="text"] {
+	width: 95%;
+	padding: 8px;
+	margin: 5px 0;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+/* Estilos para el botón de envío */
+.busqueda .btn-submit {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.busqueda .btn-submit:hover {
+	background-color: #7e1f85; /* Morado oscuro */
+	transform: scale(1.05); /* Efecto de agrandamiento */
+}
+
+/* Estilo para campos de entrada */
+input[type="text"], input[type="email"], input[type="password"],
+	textarea, select, input[type="number"] {
+	width: 95%; /* Ancho total */
+	padding: 10px; /* Espaciado interno */
+	margin: 5px 0; /* Margen superior e inferior */
+	border: 1px solid #ccc; /* Borde */
+	border-radius: 5px; /* Bordes redondeados */
+	transition: border-color 0.3s; /* Transición de borde */
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus,
+	textarea:focus, select:focus, input[type="number"]:focus {
+	border-color: #007bff; /* Color del borde al enfocar */
+	outline: none; /* Quitar outline */
+}
+
+/* Textareas */
+textarea {
+	resize: vertical; /* Solo permitir redimensionar verticalmente */
+	min-height: 100px; /* Altura mínima */
+}
+
+/* Estilos de mensajes de error y éxito */
+div[style*="color: red"] {
+	padding: 10px; /* Espaciado interno */
+	color: red; /* Texto rojo */
+	border-radius: 4px; /* Bordes redondeados */
+	text-align: center;
+}
+
+div[style*="color: green"] {
+	padding: 10px; /* Espaciado interno */
+	color: green; /* Texto verde */
+	border-radius: 4px; /* Bordes redondeados */
+	text-align: center;
+}
+
+/* Estilo del pop-up */
+.popup {
+	position: fixed; /* Posición fija */
+	z-index: 1; /* Aparece por encima de otros elementos */
+	left: 50%; /* Centrado horizontalmente */
+	top: 20%; /* Distancia desde la parte superior */
+	transform: translateX(-50%); /* Ajuste de centrado */
+	background-color: #e0f2ff; /* Color de fondo */
+	border: 1px solid #888; /* Borde */
+	padding: 15px; /* Espaciado interno */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+	display: none; /* Oculto por defecto */
+	animation: fadeIn 0.5s, fadeOut 0.5s 5.5s; /* Animaciones */
+	border-radius: 8px;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {from { opacity:0;
+	
+}
+
+to {
+	opacity: 1;
+}
+
+}
+
+/* Animación de salida */
+@keyframes fadeOut {from { opacity:1;
+	
+}
+
+to {
+	opacity: 0;
+}
+
+}
+
+/* Estilo del texto del pop-up */
+#popupMessage {
+	color: green; /* Color verde */
+	font-size: 120%; /* Tamaño de letra un 20% mayor */
+}
+
+/* Media queries para responsividad */
+@media ( max-width : 600px) {
+	h1, h2 {
+		font-size: 20px;
+		/* Tamaño de fuente más pequeño en pantallas pequeñas */
+	}
+	table, th, td {
+		font-size: 14px; /* Tamaño de fuente más pequeño */
+	}
+	input[type="text"], input[type="submit"] {
+		width: 100%; /* Botones y campos de texto ocupan el 100% */
+	}
+	.form-box, .form-buscar {
+		width: 95%; /* Formularios ocupan el 95% */
+	}
+}
