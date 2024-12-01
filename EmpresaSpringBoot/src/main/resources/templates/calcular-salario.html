@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <!-- Incluir Font Awesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Buscar Salario</title>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img th:src="@{/images/Logo.png}" alt="Logo Empresa">
+        </div>
+        <nav>
+            <a th:href="@{/}" title="Inicio"><i class="fas fa-home"></i></a>
+            <a th:href="@{/empleados/crear}" title="Crear Empleado"><i class="fas fa-user-plus"></i></a>
+            <a th:href="@{/empleados/listar}" title="Listar Empleados"><i class="fas fa-list"></i></a>
+            <a th:href="@{/empleados/calcular-salario}" title="Buscar Salario de Empleado"><i class="fas fa-search-dollar"></i></a>
+            <a th:href="@{/empleados/buscar}" title="Buscar Empleado"><i class="fas fa-search"></i></a>
+        </nav>
+    </header>
+
+    <h1>Obtener Salario de Empleado</h1>
+
+    <!-- Mostrar mensaje de error si existe -->
+    <div th:if="${mensajeError}" style="color: red;">
+        <strong th:text="${mensajeError}"></strong>
+    </div>
+
+    <div class="busqueda">
+        <!-- Formulario de búsqueda -->
+        <form th:action="@{/empleados/calcular-salario}" method="get">
+            <table>
+                <tr>
+                    <td><label for="dni">DNI del empleado:</label></td>
+                    <td><input type="text" id="dni" name="dni" th:value="${dni}" required></td>
+                </tr>
+            </table>
+            <button type="submit" class="btn-submit">Buscar</button>
+        </form>
+
+        <hr>
+
+        <!-- Mostrar información del empleado si existe -->
+        <div th:if="${empleado != null}">
+            <h3>Información del Empleado</h3>
+            <p><strong>DNI:</strong> <span th:text="${empleado.dni}"></span></p>
+            <p><strong>Nombre:</strong> <span th:text="${empleado.nombre}"></span></p>
+            <p><strong>Salario:</strong> <span th:text="${salario}"></span></p>
+        </div>
+    </div>
+
+    <button onclick="goBack()" class="btn-volver">
+        <i class="fas fa-arrow-left"></i> Volver
+    </button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

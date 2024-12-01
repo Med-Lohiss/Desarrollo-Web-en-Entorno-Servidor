@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Empleado</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <!-- Incluir Font Awesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header>
+        <!-- Logo de la empresa a la izquierda -->
+        <div class="logo">
+            <img th:src="@{/images/Logo.png}" alt="Logo Empresa">
+        </div>
+
+        <nav>
+            <!-- Enlace a la página de inicio -->
+            <a th:href="@{/}" title="Inicio">
+                <i class="fas fa-home"></i>
+            </a>
+            <a th:href="@{/empleados/crear}" title="Crear Empleado">
+                <i class="fas fa-user-plus"></i>
+            </a>
+            <a th:href="@{/empleados/listar}" title="Listar Empleados">
+                <i class="fas fa-list"></i>
+            </a>
+            <a th:href="@{/empleados/calcular-salario}" title="Buscar Salario de Empleado">
+                <i class="fas fa-search-dollar"></i>
+            </a>
+            <a th:href="@{/empleados/buscar}" title="Buscar Empleado">
+                <i class="fas fa-search"></i>
+            </a>
+        </nav>
+    </header>
+
+<h1>Actualizar Empleado</h1>
+
+<!-- Mostrar mensajes de error si los hay -->
+<div th:if="${mensajeError}" style="color: red;">
+    <p th:text="${mensajeError}"></p>
+</div>
+
+<!-- Mostrar mensajes de éxito si los hay -->
+<div th:if="${mensajeExito}" style="color: green;">
+    <p th:text="${mensajeExito}"></p>
+</div>
+
+<form th:action="@{/empleados/editar}" method="post">
+    <!-- Campo oculto para mantener el DNI del empleado -->
+    <input type="hidden" name="dni" th:value="${empleado.dni}">
+
+    <table>
+        <tr>
+            <td>Nombre:</td>
+            <td>
+                <!-- Campo para nombre con valor actual -->
+                <input type="text" name="nombre" size="50"
+                       th:value="${empleado.nombre}">
+            </td>
+        </tr>
+        <tr>
+            <td>Sexo:</td>
+            <td>
+                <!-- Campo para sexo con valor actual -->
+                <select name="sexo">
+                    <option value="M" th:selected="${empleado.sexo == 'M'}">Masculino</option>
+                    <option value="F" th:selected="${empleado.sexo == 'F'}">Femenino</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Categoría:</td>
+            <td>
+                <!-- Campo para categoría con valor actual -->
+                <input type="number" name="categoria" size="50"
+                       th:value="${empleado.categoria}" min="1" max="10">
+            </td>
+        </tr>
+        <tr>
+            <td>Años trabajados:</td>
+            <td>
+                <!-- Campo para años trabajados con valor actual -->
+                <input type="number" name="anyos" size="50"
+                       th:value="${empleado.anyos}" min="0">
+            </td>
+        </tr>
+    </table>
+
+    <!-- Botón para guardar -->
+    <input type="submit" value="Guardar">
+</form>
+
+<!-- Botón para volver -->
+<button onclick="goBack()" class="btn-volver">
+    <i class="fas fa-arrow-left"></i> Volver
+</button>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</body>
+</html>

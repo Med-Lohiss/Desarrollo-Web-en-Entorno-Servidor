@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Empleado</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <!-- Incluir Font Awesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header con logo a la izquierda y enlaces con íconos a la derecha -->
+    <header>
+        <!-- Logo de la empresa a la izquierda -->
+        <div class="logo">
+            <img th:src="@{/images/Logo.png}" alt="Logo Empresa">
+        </div>
+
+        <nav>
+            <!-- Enlace a la página de inicio -->
+            <a th:href="@{/}" title="Inicio">
+                <i class="fas fa-home"></i>
+            </a>
+            <a th:href="@{/empleados/crear}" title="Crear Empleado">
+                <i class="fas fa-user-plus"></i>
+            </a>
+            <a th:href="@{/empleados/listar}" title="Listar Empleados">
+                <i class="fas fa-list"></i>
+            </a>
+            <a th:href="@{/empleados/calcular-salario}" title="Buscar Salario de Empleado">
+                <i class="fas fa-search-dollar"></i>
+            </a>
+            <a th:href="@{/empleados/buscar}" title="Buscar Empleado">
+                <i class="fas fa-search"></i>
+            </a>
+        </nav>
+    </header>
+
+    <h1>Dar de alta a empleado</h1>
+
+    <!-- Mensajes de error o éxito -->
+    <div th:if="${mensajeError != null}" style="color: red;" th:text="${mensajeError}"></div>
+
+    <!-- Formulario de creación -->
+    <form th:action="@{/empleados/guardar}" th:object="${empleado}" method="post">
+        <table border="1">
+            <tr>
+                <td>DNI:</td>
+                <td><input type="text" th:field="*{dni}" size="50"></td>
+            </tr>
+            <tr>
+                <td>Nombre:</td>
+                <td><input type="text" th:field="*{nombre}" size="50"></td>
+            </tr>
+            <tr>
+                <td>Sexo:</td>
+                <td>
+                    <select th:field="*{sexo}">
+                        <option value="M" th:selected="*{sexo == 'M'}">Masculino</option>
+                        <option value="F" th:selected="*{sexo == 'F'}">Femenino</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Categoría:</td>
+                <td><input type="number" th:field="*{categoria}" min="1" max="10" size="50"></td>
+            </tr>
+            <tr>
+                <td>Años Trabajados:</td>
+                <td><input type="number" th:field="*{anyos}" min="0" size="50"></td>
+            </tr>
+        </table>
+        <input type="submit" value="Guardar" class="submit">
+        <input type="reset" value="Borrar" class="reset">
+    </form>
+
+    <!-- Botón Volver -->
+    <button onclick="goBack()" class="btn-volver">
+        <i class="fas fa-arrow-left"></i> Volver
+    </button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
